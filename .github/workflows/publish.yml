@@ -1,0 +1,30 @@
+name: Publish
+
+on:
+  pull_request:
+    branches:
+      - stable
+  push:
+    branches:
+      - stable
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn workspace @nicolabello/ckeditor5-build-decoupled-document build
+      - name: Publish
+        run: yarn workspace @nicolabello/ckeditor5-build-decoupled-document publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}

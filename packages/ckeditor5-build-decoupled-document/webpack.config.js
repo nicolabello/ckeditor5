@@ -9,7 +9,7 @@
 
 const path = require( 'path' );
 const webpack = require( 'webpack' );
-const { bundler, styles } = require( '@ckeditor/ckeditor5-dev-utils' );
+const { bundler } = require( '@ckeditor/ckeditor5-dev-utils' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
 
@@ -61,30 +61,11 @@ module.exports = {
 		rules: [
 			{
 				test: /\.svg$/,
-				use: [ 'raw-loader' ]
+				use: [ 'empty-string-loader' ]
 			},
 			{
 				test: /\.css$/,
-				use: [
-					{
-						loader: 'style-loader',
-						options: {
-							injectType: 'singletonStyleTag',
-							attributes: {
-								'data-cke': true
-							}
-						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: styles.getPostCssConfig( {
-							themeImporter: {
-								themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
-							},
-							minify: true
-						} )
-					}
-				]
+				use: [ 'empty-string-loader' ]
 			}
 		]
 	}
